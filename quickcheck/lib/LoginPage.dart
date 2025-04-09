@@ -112,54 +112,34 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     width: () {
                       if (MediaQuery.sizeOf(context).width < kBreakpointSmall) {
                         return 250.0;
-                      } else if (MediaQuery.sizeOf(context).width <
-                          kBreakpointMedium) {
+                      } else if (MediaQuery.sizeOf(context).width < kBreakpointMedium) {
                         return 300.0;
-                      } else if (MediaQuery.sizeOf(context).width <
-                          kBreakpointLarge) {
+                      } else if (MediaQuery.sizeOf(context).width < kBreakpointLarge) {
                         return 350.0;
                       } else {
                         return 400.0;
                       }
                     }(),
                     child: TextFormField(
-                      controller: _model.senhaTextController,
-                      focusNode: _model.senhaFocusNode,
+                      controller: _model.emailTextController, // novo controller
+                      focusNode: _model.emailFocusNode,       // novo focusNode
                       autofocus: false,
                       obscureText: false,
                       decoration: InputDecoration(
                         isDense: true,
-                        labelStyle: FlutterFlowTheme.of(context)
-                            .labelMedium
-                            .override(
-                          fontFamily:
-                          FlutterFlowTheme.of(context).labelMediumFamily,
-                          letterSpacing: 0.0,
-                          useGoogleFonts: GoogleFonts.asMap().containsKey(
-                              FlutterFlowTheme.of(context).labelMediumFamily),
-                        ),
                         hintText: 'Email:',
-                        hintStyle: FlutterFlowTheme.of(context)
-                            .labelMedium
-                            .override(
-                          fontFamily:
-                          FlutterFlowTheme.of(context).labelMediumFamily,
+                        hintStyle: FlutterFlowTheme.of(context).labelMedium.override(
+                          fontFamily: FlutterFlowTheme.of(context).labelMediumFamily,
                           letterSpacing: 0.0,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
                               FlutterFlowTheme.of(context).labelMediumFamily),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
+                          borderSide: const BorderSide(color: Color(0x00000000), width: 1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0x00000000),
-                            width: 1,
-                          ),
+                          borderSide: const BorderSide(color: Color(0x00000000), width: 1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
@@ -177,19 +157,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         filled: true,
-                        fillColor:
-                        FlutterFlowTheme.of(context).secondaryBackground,
+                        fillColor: FlutterFlowTheme.of(context).secondaryBackground,
                       ),
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily:
-                        FlutterFlowTheme.of(context).bodyMediumFamily,
+                        fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                         letterSpacing: 0.0,
                         useGoogleFonts: GoogleFonts.asMap().containsKey(
                             FlutterFlowTheme.of(context).bodyMediumFamily),
                       ),
                       cursorColor: FlutterFlowTheme.of(context).primaryText,
-                      validator: (value) => _model.senhaTextControllerValidator(context, value),
-
+                      validator: (value) => _model.emailTextControllerValidator(context, value),
                     ),
                   ),
                 ),
