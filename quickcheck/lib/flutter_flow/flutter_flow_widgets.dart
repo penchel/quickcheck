@@ -28,11 +28,11 @@ class FFButtonWidget extends StatelessWidget {
   final FFButtonOptions options;
 
   const FFButtonWidget({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     required this.options,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
