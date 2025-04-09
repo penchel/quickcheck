@@ -1,32 +1,58 @@
 import 'package:flutter/material.dart';
 
-// Placeholder para widgets personalizados do FlutterFlow
-// Crie componentes customizados aqui se o LoginPage precisar
+class FFButtonOptions {
+  final double width;
+  final double height;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry iconPadding;
+  final Color color;
+  final TextStyle textStyle;
+  final double elevation;
+  final double borderRadius;
 
-// Exemplo: um botão estilizado (caso use em outras páginas depois)
+  const FFButtonOptions({
+    this.width = 130,
+    this.height = 40,
+    this.padding = const EdgeInsets.all(8),
+    this.iconPadding = const EdgeInsets.all(0),
+    this.color = Colors.blue,
+    required this.textStyle,
+    this.elevation = 2.0,
+    this.borderRadius = 8.0,
+  });
+}
+
 class FFButtonWidget extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final Color color;
-  final TextStyle textStyle;
+  final FFButtonOptions options;
 
   const FFButtonWidget({
     Key? key,
     required this.text,
     required this.onPressed,
-    this.color = Colors.blue,
-    this.textStyle = const TextStyle(color: Colors.white),
+    required this.options,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: color,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-      ),
+    return MaterialButton(
       onPressed: onPressed,
-      child: Text(text, style: textStyle),
+      color: options.color,
+      elevation: options.elevation,
+      padding: options.padding,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(options.borderRadius),
+      ),
+      child: Container(
+        width: options.width,
+        height: options.height,
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: options.textStyle,
+        ),
+      ),
     );
   }
 }

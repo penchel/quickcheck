@@ -1,21 +1,37 @@
+// lib/flutter_flow/flutter_flow_theme.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FlutterFlowTheme {
   static FlutterFlowTheme of(BuildContext context) => FlutterFlowTheme();
 
-  // Estilo de texto principal da tela (como o título "QuickCheck")
+  // Text styles
   TextStyle get displayLarge => GoogleFonts.notoSans(
     color: Colors.white,
     fontWeight: FontWeight.bold,
     fontSize: 40,
   );
 
-// Aqui você pode adicionar mais estilos conforme for usando
-// Ex: titleSmall, bodyMedium, labelLarge, etc.
+  TextStyle get labelMedium => GoogleFonts.notoSans(
+    color: Colors.grey[800],
+    fontSize: 14,
+  );
+
+  String get labelMediumFamily => 'Noto Sans';
+
+  TextStyle get bodyMedium => GoogleFonts.notoSans(
+    color: Colors.black87,
+    fontSize: 16,
+  );
+
+  String get bodyMediumFamily => 'Noto Sans';
+
+  // Colors
+  Color get error => Colors.red;
+  Color get secondaryBackground => Colors.white;
+  Color get primaryText => Colors.black;
 }
 
-/// Extensão para permitir usar `.override(...)` igual no FlutterFlow
 extension TextStyleHelper on TextStyle {
   TextStyle override({
     String? fontFamily,

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 const double kBreakpointSmall = 600.0;
 const double kBreakpointMedium = 1024.0;
