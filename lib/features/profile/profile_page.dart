@@ -7,8 +7,6 @@ import 'package:quickcheck/data/isar_service.dart';   // control bank
 import 'package:quickcheck/data/profile/user.dart';   // table
 import 'package:isar/isar.dart';    // complete package
 
-
-
 class ProfilePage extends StatefulWidget {
   final String userCpf;   // CPF that was passed
   const ProfilePage({super.key, required this.userCpf});

@@ -5,7 +5,9 @@ import 'package:quickcheck/features/profile/register_page.dart';    // redirecti
 
 import 'package:isar/isar.dart';    // complete package
 import 'package:quickcheck/data/isar_service.dart';   // control data
-import 'package:quickcheck/data/profile/user.dart';   // table
+import 'package:quickcheck/data/profile/user.dart';
+
+import '../../data/auth_service.dart';   // table
 
 
 
@@ -37,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {    // customize the state
         context,
         MaterialPageRoute(builder: (_) => NavBar(userCpf: cpf)),    // cpf is passed
       );
+      AuthService().login(user.id);
     } else {
       showDialog(
         context: context,

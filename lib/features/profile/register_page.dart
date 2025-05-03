@@ -14,7 +14,6 @@ class RegisterPage extends StatefulWidget {    // Extends from a not fixed class
   State<RegisterPage> createState() => _RegisterPageState();  // create a state
 }
 
-
 class _RegisterPageState extends State<RegisterPage> {    // customize the state
 
   final TextEditingController _userController = TextEditingController();   // controls the text field
@@ -111,6 +110,4 @@ class _RegisterPageState extends State<RegisterPage> {    // customize the state
       MaterialPageRoute(builder: (_) => const LoginPage()),
     );
   }
-
-
 }

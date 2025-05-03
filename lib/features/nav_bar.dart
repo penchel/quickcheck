@@ -5,8 +5,6 @@ import 'package:quickcheck/features/cam/cam_page.dart';   // redirecting
 
 import 'package:quickcheck/app/theme_nav_bar.dart';   //
 
-
-
 class NavBar extends StatefulWidget {
   final String userCpf;
   const NavBar({super.key, required this.userCpf});   // builder -- When creating, it is necessary to have a CPF
