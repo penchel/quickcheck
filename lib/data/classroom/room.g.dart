@@ -17,13 +17,23 @@ const RoomSchema = CollectionSchema(
   name: r'Room',
   id: -1093513927825131211,
   properties: {
-    r'subject': PropertySchema(
+    r'anoLetivo': PropertySchema(
       id: 0,
+      name: r'anoLetivo',
+      type: IsarType.long,
+    ),
+    r'semestre': PropertySchema(
+      id: 1,
+      name: r'semestre',
+      type: IsarType.string,
+    ),
+    r'subject': PropertySchema(
+      id: 2,
       name: r'subject',
       type: IsarType.string,
     ),
     r'userId': PropertySchema(
-      id: 1,
+      id: 3,
       name: r'userId',
       type: IsarType.long,
     )
@@ -48,6 +58,7 @@ int _roomEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.semestre.length * 3;
   bytesCount += 3 + object.subject.length * 3;
   return bytesCount;
 }
@@ -58,8 +69,10 @@ void _roomSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.subject);
-  writer.writeLong(offsets[1], object.userId);
+  writer.writeLong(offsets[0], object.anoLetivo);
+  writer.writeString(offsets[1], object.semestre);
+  writer.writeString(offsets[2], object.subject);
+  writer.writeLong(offsets[3], object.userId);
 }
 
 Room _roomDeserialize(
@@ -69,9 +82,11 @@ Room _roomDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Room();
+  object.anoLetivo = reader.readLong(offsets[0]);
   object.id = id;
-  object.subject = reader.readString(offsets[0]);
-  object.userId = reader.readLong(offsets[1]);
+  object.semestre = reader.readString(offsets[1]);
+  object.subject = reader.readString(offsets[2]);
+  object.userId = reader.readLong(offsets[3]);
   return object;
 }
 
@@ -83,8 +98,12 @@ P _roomDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 1:
+      return (reader.readString(offset)) as P;
+    case 2:
+      return (reader.readString(offset)) as P;
+    case 3:
       return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -179,6 +198,58 @@ extension RoomQueryWhere on QueryBuilder<Room, Room, QWhereClause> {
 }
 
 extension RoomQueryFilter on QueryBuilder<Room, Room, QFilterCondition> {
+  QueryBuilder<Room, Room, QAfterFilterCondition> anoLetivoEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'anoLetivo',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> anoLetivoGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'anoLetivo',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> anoLetivoLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'anoLetivo',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> anoLetivoBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'anoLetivo',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Room, Room, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -227,6 +298,135 @@ extension RoomQueryFilter on QueryBuilder<Room, Room, QFilterCondition> {
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> semestreEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'semestre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> semestreGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'semestre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> semestreLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'semestre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> semestreBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'semestre',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> semestreStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'semestre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> semestreEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'semestre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> semestreContains(String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'semestre',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> semestreMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'semestre',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> semestreIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'semestre',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterFilterCondition> semestreIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'semestre',
+        value: '',
       ));
     });
   }
@@ -417,6 +617,30 @@ extension RoomQueryObject on QueryBuilder<Room, Room, QFilterCondition> {}
 extension RoomQueryLinks on QueryBuilder<Room, Room, QFilterCondition> {}
 
 extension RoomQuerySortBy on QueryBuilder<Room, Room, QSortBy> {
+  QueryBuilder<Room, Room, QAfterSortBy> sortByAnoLetivo() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'anoLetivo', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterSortBy> sortByAnoLetivoDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'anoLetivo', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterSortBy> sortBySemestre() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'semestre', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterSortBy> sortBySemestreDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'semestre', Sort.desc);
+    });
+  }
+
   QueryBuilder<Room, Room, QAfterSortBy> sortBySubject() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'subject', Sort.asc);
@@ -443,6 +667,18 @@ extension RoomQuerySortBy on QueryBuilder<Room, Room, QSortBy> {
 }
 
 extension RoomQuerySortThenBy on QueryBuilder<Room, Room, QSortThenBy> {
+  QueryBuilder<Room, Room, QAfterSortBy> thenByAnoLetivo() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'anoLetivo', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterSortBy> thenByAnoLetivoDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'anoLetivo', Sort.desc);
+    });
+  }
+
   QueryBuilder<Room, Room, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -452,6 +688,18 @@ extension RoomQuerySortThenBy on QueryBuilder<Room, Room, QSortThenBy> {
   QueryBuilder<Room, Room, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterSortBy> thenBySemestre() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'semestre', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Room, Room, QAfterSortBy> thenBySemestreDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'semestre', Sort.desc);
     });
   }
 
@@ -481,6 +729,19 @@ extension RoomQuerySortThenBy on QueryBuilder<Room, Room, QSortThenBy> {
 }
 
 extension RoomQueryWhereDistinct on QueryBuilder<Room, Room, QDistinct> {
+  QueryBuilder<Room, Room, QDistinct> distinctByAnoLetivo() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'anoLetivo');
+    });
+  }
+
+  QueryBuilder<Room, Room, QDistinct> distinctBySemestre(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'semestre', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<Room, Room, QDistinct> distinctBySubject(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -499,6 +760,18 @@ extension RoomQueryProperty on QueryBuilder<Room, Room, QQueryProperty> {
   QueryBuilder<Room, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<Room, int, QQueryOperations> anoLetivoProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'anoLetivo');
+    });
+  }
+
+  QueryBuilder<Room, String, QQueryOperations> semestreProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'semestre');
     });
   }
 

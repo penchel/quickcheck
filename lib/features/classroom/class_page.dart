@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:quickcheck/data/isar_service.dart';
 import 'package:quickcheck/data/classroom/room.dart'; // A importação do modelo Room, que define a estrutura de dados para sala
-import 'package:quickcheck/data/auth_service.dart'; // Importa o serviço de autenticação que guarda o ID do usuário
+import 'package:quickcheck/data/auth_service.dart';
+import 'package:quickcheck/features/time/time.dart'; // Importa o serviço de autenticação que guarda o ID do usuário
 
 class ClassPage extends StatefulWidget {
   // Construtor sem parâmetros obrigatórios, pois o usuário já está autenticado globalmente
@@ -41,57 +42,6 @@ class _ClassPageState extends State<ClassPage> {
     });
   }
 
-  /// Adiciona uma nova sala com o nome informado
-  Future<void> _addRoom(String name) async {
-    final isar = await IsarService.getIsarInstance();
-    final userId = AuthService().userId; // Pega novamente o userId
-    // Cria uma instância de Room preenchendo subject e userId
-    final newRoom = Room()
-      ..subject = name
-      ..userId = userId!; // Associa a sala ao usuário logado
-
-    // Executa transação de escrita no banco para adicionar a sala
-    await isar.writeTxn(() async {
-      await isar.rooms.put(newRoom);
-    });
-
-    // Recarrega as salas para refletir a inserção na interface
-    _loadRooms();
-  }
-
-  /// Exibe um diálogo para o usuário inserir o nome da nova sala
-  void _showAddDialog() {
-    final controller = TextEditingController(); // Controlador do campo de texto
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Nova Sala'),
-        content: TextField(
-          controller: controller,
-          decoration: const InputDecoration(hintText: 'Nome da Sala'),
-        ),
-        actions: [
-          // Botão de cancelar, apenas fecha o diálogo
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
-          ),
-          // Botão de criar, chama _addRoom
-          ElevatedButton(
-            onPressed: () {
-              final name = controller.text.trim();
-              if (name.isNotEmpty) {
-                _addRoom(name); // Adiciona a sala no banco
-              }
-              Navigator.pop(context); // Fecha o diálogo
-            },
-            child: const Text('Criar'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // Estrutura básica da página com AppBar, lista e botão flutuante
@@ -107,14 +57,19 @@ class _ClassPageState extends State<ClassPage> {
             child: ListTile(
               leading: const Icon(Icons.meeting_room),
               title: Text(room.subject), // Exibe o nome da sala
+              onTap: () {
+                final roomId = room.id; // ✅ Aqui você pega o ID da sala
+                print('ID da sala selecionada: $roomId');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => TimePage(roomId: roomId), // você pode passar o roomId para a próxima tela
+                  ),
+                );
+              }
             ),
           );
         },
-      ),
-      // Botão flutuante para criar nova sala
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showAddDialog,
-        child: const Icon(Icons.add),
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';    // complete package
-part 'user.g.dart'; // automatically generated
+part 'user.g.dart';
 
 
 @collection  // will become a table in the bank

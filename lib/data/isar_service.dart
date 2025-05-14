@@ -1,7 +1,9 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:quickcheck/data/profile/user.dart';    // Importa o modelo User para registrar seu schema
-import 'package:quickcheck/data/classroom/room.dart'; // Importa o modelo Room para registrar seu schema
+import 'package:quickcheck/data/classroom/room.dart';
+import 'package:quickcheck/data/students/student.dart';
+import 'package:quickcheck/data/time_class/time.dart'; // Importa o modelo Room para registrar seu schema
 
 /// Serviço responsável por inicializar e fornecer a instância do banco de dados Isar.
 /// Mantém uma instância única (singleton) para todo o aplicativo.
@@ -26,6 +28,9 @@ class IsarService {
       [
         UserSchema, // Schema gerado para a coleção de usuários
         RoomSchema, // Schema gerado para a coleção de salas
+        TimeSchema,
+        StudentClassSchema
+        
       ],
       directory: dir.path, // Local físico onde os arquivos do banco serão armazenados
     );

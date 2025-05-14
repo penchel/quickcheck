@@ -29,7 +29,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  intl: ^0.18.1
+  shared_preferences: ^2.2.2
+  csv: ^5.0.0
   isar: ^3.1.0
   isar_flutter_libs: any
   path_provider: any
@@ -61,6 +63,11 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/csv/classroom.csv
+    - assets/csv/students.csv
+    - assets/csv/time_room.csv
+    - assets/csv/user.csv
 
   # To add assets to your application, add an assets section, like this:
   # assets:
