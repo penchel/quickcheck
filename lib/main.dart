@@ -6,6 +6,7 @@ import 'package:quickcheck/data/classroom/room.dart';
 import 'package:quickcheck/data/profile/user.dart';
 import 'package:quickcheck/data/students/student.dart';
 import 'package:quickcheck/data/time_class/time.dart';
+import 'package:quickcheck/features/profile/login_page.dart';
 import 'package:quickcheck/features/profile/register_page.dart';
 import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,12 +24,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    _init();
-  }
-
   Future<void> _init() async {
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -47,10 +42,16 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _init();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RegisterPage(),
+      home: LoginPage(),
     );
   }
 }
@@ -102,7 +103,7 @@ Future<void> import() async {
   for (var row in rowsTimes.skip(1)) {
     if (row.length < 6) continue;
     final time = Time()
-      ..studentIds = row[1].toString().split(',').map((e) => int.tryParse(e) ?? 0).toList()
+      ..studentIds = row[1].toString().split(';').map((e) => int.tryParse(e) ?? 0).toList()
       ..roomId = int.parse(row[2].toString())
       ..name = row[3].toString()
       ..data = row[4].toString()

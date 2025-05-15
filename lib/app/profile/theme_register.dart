@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 
 class RegisterTheme {
@@ -18,3 +19,5 @@ class RegisterTheme {
     ),
   );
 }
+*/
+

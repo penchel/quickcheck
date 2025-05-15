@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:quickcheck/data/presence/presence_list.dart';
 import 'package:quickcheck/data/profile/user.dart';    // Importa o modelo User para registrar seu schema
 import 'package:quickcheck/data/classroom/room.dart';
 import 'package:quickcheck/data/students/student.dart';
@@ -29,7 +30,8 @@ class IsarService {
         UserSchema, // Schema gerado para a coleção de usuários
         RoomSchema, // Schema gerado para a coleção de salas
         TimeSchema,
-        StudentClassSchema
+        StudentClassSchema,
+        PresenceListSchema
         
       ],
       directory: dir.path, // Local físico onde os arquivos do banco serão armazenados

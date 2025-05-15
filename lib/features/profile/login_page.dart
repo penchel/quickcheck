@@ -41,6 +41,7 @@ class _LoginPageState extends State<LoginPage> {    // customize the state
       );
       AuthService().login(user.id);
     } else {
+      if (!mounted) return;
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -83,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {    // customize the state
             ),
             const SizedBox(height: 16),
 
+            /*
             TextButton(
               onPressed: () {
                 Navigator.pushReplacement(
@@ -92,6 +94,7 @@ class _LoginPageState extends State<LoginPage> {    // customize the state
               },
               child: const Text('Fazer Registro'),
             ),
+            */
 
           ],
         ),

@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:quickcheck/app/profile/theme_register.dart';   // decoration
 import 'package:quickcheck/features/profile/login_page.dart'; // redirecting
@@ -111,3 +112,4 @@ class _RegisterPageState extends State<RegisterPage> {    // customize the state
     );
   }
 }
+*/
